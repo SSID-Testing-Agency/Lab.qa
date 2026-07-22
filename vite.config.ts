@@ -50,7 +50,7 @@ export default defineConfig({
     tailwindcss(),
     apiMockPlugin(),
   ],
-  base: '/ecom-fake-website/',
+  base: '/Lab.qa/',
   build: {
     outDir: 'dist',
     sourcemap: true,

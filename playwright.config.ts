@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173/ecom-fake-website/'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173/Lab.qa/'
 
 export default defineConfig({
   testDir: './playwright/specs',
@@ -34,7 +34,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:5173/ecom-fake-website/',
+    url: 'http://localhost:5173/Lab.qa/',
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
   },
