@@ -1,0 +1,43 @@
+Lab
+Copyright 2026 Lab.qa
+
+Ce produit inclut des logiciels développés par Lab.qa.
+
+Le code de ce projet est distribué sous licence Apache, Version 2.0.
+Une copie de la licence est disponible dans le fichier LICENSE situé à la
+racine du dépôt, ainsi qu'à l'adresse :
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+------------------------------------------------------------------------------
+MARQUES (TRADEMARKS)
+------------------------------------------------------------------------------
+
+« Lab.qa », le logo Lab.qa, ainsi que les autres
+noms, logos et marques figurant dans ce projet sont la propriété exclusive de
+Lab.qa.
+
+Conformément à la section 6 de la licence Apache 2.0, la licence applicable au
+code NE CONCÈDE AUCUN DROIT d'utilisation de ces noms, logos ou marques, au-delà
+de l'usage raisonnable et habituel nécessaire pour décrire l'origine de l'œuvre.
+
+En particulier, toute personne réutilisant, modifiant ou redistribuant ce projet
+DOIT :
+
+  - retirer ou remplacer le logo et la marque Lab.qa de sa propre
+    version, sauf autorisation écrite préalable de Lab.qa ;
+  - ne pas laisser entendre que sa version est approuvée, soutenue ou
+    officiellement associée à Lab.qa sans une telle autorisation.
+
+L'utilisation de la marque pour simplement indiquer l'origine du projet
+(par exemple : « basé sur Lab, créé par Lab.qa »)
+reste permise.
+
+------------------------------------------------------------------------------
+DESTINATION DU PROJET
+------------------------------------------------------------------------------
+
+Ce logiciel est une application de DÉMONSTRATION ET D'ENTRAÎNEMENT à des fins
+de test et de pédagogie en assurance qualité (QA). Les comptes, produits, prix
+et commandes sont entièrement fictifs. Le projet n'est pas destiné à un usage
+en production et ne traite aucune donnée réelle.
