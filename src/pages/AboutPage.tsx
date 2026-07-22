@@ -45,7 +45,7 @@ export function AboutPage() {
           <h2 className="text-base font-medium text-fg mb-2">Auteur</h2>
           <p className="text-sm text-fg-muted">
             Conçu par{' '}
-            <a href="https://lordrequiem.github.io/website/" className="text-accent" target="_blank" rel="noreferrer">
+            <a href="https://ssid-testing-agency.github.io/website/" className="text-accent" target="_blank" rel="noreferrer">
               Romuald Lenormand
             </a>
             , QA Engineer chez{' '}

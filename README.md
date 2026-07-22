@@ -3,10 +3,10 @@
 > A fictional e-commerce playground built **for QA practice and test automation training**.
 > Add products to a cart, create fake accounts, place fake orders. Nothing here is real.
 
-[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)](https://lordrequiem.github.io/Lab.qa/)
+[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)](https://ssid-testing-agency.github.io/Lab.qa/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](./LICENSE)
 
-**Live demo:** https://lordrequiem.github.io/Lab.qa/
+**Live demo:** https://ssid-testing-agency.github.io/Lab.qa/
 
 ---
 
@@ -56,7 +56,7 @@ Intended audience: QA engineers, automation trainees, and the QA community.
 
 ```bash
 # 1. Clone
-git clone https://github.com/lordrequiem/Lab.qa
+git clone https://github.com/ssid-testing-agency/Lab.qa
 cd Lab.qa
 
 # 2. Install
@@ -141,7 +141,7 @@ npm run test:ui             # Playwright interactive UI
 npm run test:report         # open HTML report
 
 # Test against the deployed version
-BASE_URL=https://lordrequiem.github.io/Lab.qa/ npm test
+BASE_URL=https://ssid-testing-agency.github.io/Lab.qa/ npm test
 ```
 
 ---
@@ -188,7 +188,7 @@ By contributing you agree your contribution is licensed under the project licens
 
 ## Maintainers
 
-- lordrequiem
+- ssid-testing-agency
 
 ## Decisions
 
