@@ -9,7 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-2">
             <span className="font-mono text-base font-bold text-fg tracking-wide">
-              <span className="text-accent">&gt;</span> ShopLab<span className="text-accent">.qa</span>
+              <span className="text-accent">&gt;</span> Lab<span className="text-accent">.qa</span>
             </span>
             <p className="text-sm text-fg-muted leading-relaxed">
               Une boutique fictive proposée par SSID - Testing agency conçue pour la pratique des tests automatisés.
