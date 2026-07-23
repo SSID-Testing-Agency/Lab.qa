@@ -76,7 +76,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
         {/* Logo */}
         <Link to="/" className="flex-1 text-center font-mono text-3xl font-bold text-fg no-underline tracking-wide">
-          <span className="text-accent">&gt;</span> ShopLab<span className="text-accent">.qa</span>
+          <span className="text-accent">&gt;</span> Lab<span className="text-accent">.qa</span>
         </Link>
 
         {/* Actions */}
