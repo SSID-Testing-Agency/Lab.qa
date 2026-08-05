@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router'
 import type { Product } from '@/data/products'
 import { effectivePrice } from '@/data/products'
 import { fetchProducts } from '@/api/products'
@@ -80,8 +80,8 @@ export function CatalogPage() {
       switch (sortOption) {
         case 'name-asc':   return a.name.localeCompare(b.name)
         case 'name-desc':  return b.name.localeCompare(a.name)
-        case 'price-asc':  return a.price - b.price
-        case 'price-desc': return b.price - a.price
+        case 'price-asc':  return effectivePrice(a) - effectivePrice(b)
+        case 'price-desc': return effectivePrice(b) - effectivePrice(a)
       }
     })
 

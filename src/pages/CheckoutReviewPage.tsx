@@ -1,4 +1,4 @@
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router'
 import { useCart } from '@/hooks/useCart'
 import { useBugStore } from '@/store/bugStore'
 import { useCheckoutStore } from '@/store/checkoutStore'

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router'
 import { useAuthStore } from '@/store/authStore'
 import { USERS_MAP } from '@/data/users'
 import { Input } from '@/components/ui/Input'

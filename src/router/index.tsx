@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom'
+import { createHashRouter, RouterProvider, Navigate, Outlet } from 'react-router'
 import { Layout } from '@/components/layout/Layout'
 import { LandingPage } from '@/pages/LandingPage'
 import { LoginPage } from '@/pages/LoginPage'

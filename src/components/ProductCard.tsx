@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import type { Product } from '@/data/products'
 import { effectivePrice } from '@/data/products'
 import { useBugStore } from '@/store/bugStore'

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { useCart } from '@/hooks/useCart'
 import { useBugStore } from '@/store/bugStore'
 import { CartItem } from '@/components/CartItem'
