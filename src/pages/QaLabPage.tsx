@@ -5,7 +5,7 @@ interface BugDef {
   id: BugId
   label: string
   zone: string
-  activation: ('problem_user' | '?bugs=true')[]
+  activation: ('client_chaos' | '?bugs=true')[]
   description: string
   objective: string
   hints: string[]
@@ -34,7 +34,7 @@ const BUGS: BugDef[] = [
     id: 'broken-images',
     label: 'Broken Images',
     zone: 'Catalogue',
-    activation: ['problem_user', '?bugs=true'],
+    activation: ['client_chaos', '?bugs=true'],
     description: 'Les images produit sont remplacées par des URLs invalides — chaque carte affiche une image cassée.',
     objective: 'Vérifier que toutes les images produit se chargent correctement. Tester la présence d\'un attribut src valide et l\'absence d\'état d\'erreur sur les balises <img>.',
     hints: [
@@ -47,7 +47,7 @@ const BUGS: BugDef[] = [
     id: 'reversed-sort',
     label: 'Reversed Sort',
     zone: 'Catalogue',
-    activation: ['problem_user', '?bugs=true'],
+    activation: ['client_chaos', '?bugs=true'],
     description: 'Le tri « Prix croissant » retourne les résultats dans l\'ordre décroissant — l\'article le plus cher apparaît en premier.',
     objective: 'Tester un tri et comparer l\'ordre attendu. Extraire la liste des prix affichés après application d\'un tri et vérifier que la séquence est bien croissante.',
     hints: [
@@ -60,7 +60,7 @@ const BUGS: BugDef[] = [
     id: 'disappearing-button',
     label: 'Disappearing Button',
     zone: 'Catalogue / Fiche produit',
-    activation: ['problem_user', '?bugs=true'],
+    activation: ['client_chaos', '?bugs=true'],
     description: 'Le bouton « Ajouter au panier » est rendu invisible sur certaines cartes produit — il existe dans le DOM mais ne peut pas être cliqué.',
     objective: 'Détecter une régression UI. Vérifier que le bouton est bien visible (et pas seulement présent) sur chaque carte produit en stock.',
     hints: [
