@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCartStore } from '@/store/cartStore'
 import { useBugStore } from '@/store/bugStore'

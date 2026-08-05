@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router'
 import { useCartStore } from '@/store/cartStore'
 import { useCheckoutStore } from '@/store/checkoutStore'
 import { CheckoutStepper } from '@/components/CheckoutStepper'

@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router'
 import { useEffect, useState } from 'react'
 import { PRODUCTS, PRODUCTS_MAP, effectivePrice } from '@/data/products'
 import { useBugStore } from '@/store/bugStore'

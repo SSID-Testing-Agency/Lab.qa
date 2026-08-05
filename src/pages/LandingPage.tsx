@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, Link } from 'react-router-dom'
+import { Navigate, Link } from 'react-router'
 import { useAuthStore } from '@/store/authStore'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { useNavigate, useLocation, Navigate } from 'react-router-dom'
+import { useNavigate, useLocation, Navigate } from 'react-router'
 import { useCart } from '@/hooks/useCart'
 import { useCheckoutStore } from '@/store/checkoutStore'
 import { submitPayment } from '@/api/payment'

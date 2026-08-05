@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function NotFoundPage() {
