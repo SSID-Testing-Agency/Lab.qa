@@ -128,4 +128,12 @@ test.describe('Mode bugs — client_chaos', () => {
     await expect(checkout.continueButton).toBeDisabled()
     await expect(page).toHaveURL(/#\/checkout\/info/)
   })
+
+  test('le QA Lab indique le compte client_chaos comme méthode d\'activation', async ({ page }) => {
+    await page.goto('./#/qa-lab')
+
+    const activationLabels = page.locator('article').filter({ hasText: 'Activation :' }).locator('code')
+    await expect(activationLabels.filter({ hasText: /^client_chaos$/ })).toHaveCount(3)
+    await expect(activationLabels.filter({ hasText: /^problem_user$/ })).toHaveCount(0)
+  })
 })
