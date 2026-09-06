@@ -59,7 +59,7 @@ const BUGS: BugDef[] = [
   {
     id: 'disappearing-button',
     label: 'Disappearing Button',
-    zone: 'Catalogue / Fiche produit',
+    zone: 'Catalogue',
     activation: ['client_chaos', '?bugs=true'],
     description: 'Le bouton « Ajouter au panier » est rendu invisible sur certaines cartes produit — il existe dans le DOM mais ne peut pas être cliqué.',
     objective: 'Détecter une régression UI. Vérifier que le bouton est bien visible (et pas seulement présent) sur chaque carte produit en stock.',

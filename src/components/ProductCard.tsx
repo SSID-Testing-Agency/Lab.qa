@@ -15,8 +15,16 @@ interface ProductCardProps {
   product: Product
 }
 
+// Keep the affected products deterministic so the intentional regression is
+// reproducible in automated tests and across page reloads.
+const PRODUCTS_WITH_HIDDEN_CART_ACTION = new Set([
+  'sauce-backpack',
+  'sauce-headphones',
+  'book-clean-code',
+  'book-playwright',
+])
+
 export function ProductCard({ product }: ProductCardProps) {
-  const [clicked, setClicked] = useState(false)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [qty, setQty] = useState(1)
   const addItem = useCartStore(s => s.addItem)
@@ -36,7 +44,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const imageSrc = getProductImageSrc(base, product.image, hasBug('broken-images'))
 
   const hasSizes = product.sizes && product.sizes.length > 0
-  const showButton = !(hasBug('disappearing-button') && clicked)
+  const hidePurchaseAction = hasBug('disappearing-button')
+    && PRODUCTS_WITH_HIDDEN_CART_ACTION.has(product.id)
   const purchaseActionState = getPurchaseActionState({
     inventory: product.inventory,
     cartQuantity: cartQty,
@@ -58,7 +67,6 @@ export function ProductCard({ product }: ProductCardProps) {
     if (!canAdd) return
     addItem(product.id, selectedSize ?? undefined, qty)
     setQty(1)
-    if (hasBug('disappearing-button')) setClicked(true)
   }
 
   // Top-left badge: rupture > low-stock > nouveau
@@ -208,23 +216,22 @@ export function ProductCard({ product }: ProductCardProps) {
                 </svg>
               )}
             </button>
-            {showButton && (
-              <Button
-                size="sm"
-                data-testid={getCatalogPurchaseTestId(purchaseActionState, product.id)}
-                onClick={handleAddToCart}
-                disabled={!canAdd}
-                aria-label={purchaseActionState === 'add-to-cart'
-                  ? `Ajouter ${product.name} au panier`
-                  : purchaseActionState === 'choose-size'
-                    ? `${product.name} — choisir une taille`
-                    : purchaseActionState === 'out-of-stock'
-                      ? `${product.name} — rupture de stock`
-                      : `${product.name} — quantité maximale atteinte`}
-              >
-                {getPurchaseActionLabel(purchaseActionState, { compact: true })}
-              </Button>
-            )}
+            <Button
+              size="sm"
+              data-testid={getCatalogPurchaseTestId(purchaseActionState, product.id)}
+              onClick={handleAddToCart}
+              disabled={!canAdd}
+              aria-label={purchaseActionState === 'add-to-cart'
+                ? `Ajouter ${product.name} au panier`
+                : purchaseActionState === 'choose-size'
+                  ? `${product.name} — choisir une taille`
+                  : purchaseActionState === 'out-of-stock'
+                    ? `${product.name} — rupture de stock`
+                    : `${product.name} — quantité maximale atteinte`}
+              className={hidePurchaseAction ? 'invisible pointer-events-none' : ''}
+            >
+              {getPurchaseActionLabel(purchaseActionState, { compact: true })}
+            </Button>
           </div>
         </div>
       </div>
