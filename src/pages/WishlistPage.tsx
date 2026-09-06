@@ -6,6 +6,7 @@ import { PRODUCTS_MAP, effectivePrice } from '@/data/products'
 import { Button } from '@/components/ui/Button'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { formatPrice } from '@/utils/price'
+import { getProductImageSrc } from '@/utils/productImage'
 import { getPurchaseActionLabel, getPurchaseActionState } from '@/utils/purchaseAction'
 
 export function WishlistPage() {
@@ -90,9 +91,7 @@ export function WishlistPage() {
             })
             const isOutOfStock = purchaseActionState === 'out-of-stock'
             const isAtMax = purchaseActionState === 'max-reached'
-            const imageSrc   = hasBug('broken-images')
-              ? `${base}images/broken.svg`
-              : `${base}${product.image}`
+            const imageSrc = getProductImageSrc(base, product.image, hasBug('broken-images'))
 
             return (
               <div

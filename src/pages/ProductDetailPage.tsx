@@ -10,6 +10,7 @@ import { StarRating } from '@/components/ui/StarRating'
 import { Button } from '@/components/ui/Button'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { formatPrice } from '@/utils/price'
+import { getProductImageSrc } from '@/utils/productImage'
 import { getPurchaseActionLabel, getPurchaseActionState } from '@/utils/purchaseAction'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -75,9 +76,7 @@ export function ProductDetailPage() {
     setTimeout(() => setAdded(false), 1500)
   }
 
-  const imageSrc = hasBug('broken-images')
-    ? `${base}images/broken.svg`
-    : `${base}${product.image}`
+  const imageSrc = getProductImageSrc(base, product.image, hasBug('broken-images'))
 
   const related = PRODUCTS
     .filter(p => p.category === product.category && p.id !== product.id)
