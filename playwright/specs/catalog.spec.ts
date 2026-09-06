@@ -54,6 +54,7 @@ test.describe('Catalogue produits', () => {
       await expect(catalog.productPrice(id)).toBeVisible()
     }
     await expect(catalog.addToCartButton('sauce-backpack')).toBeEnabled()
+    await expect(catalog.addToCartButton('sauce-backpack')).toHaveText('Ajouter au panier')
     await expect(catalog.chooseSizeAction('sauce-bolt-shirt')).toBeDisabled()
     await expect(catalog.outOfStockAction('sauce-bike-light')).toBeDisabled()
     await expect(catalog.outOfStockAction('sauce-jacket')).toBeDisabled()
