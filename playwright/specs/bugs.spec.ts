@@ -77,14 +77,13 @@ test.describe('Mode bugs — ?bugs=true', () => {
     expect(total).toBeLessThan(64.79)
   })
 
-  test('le bouton "Ajouter au panier" disparaît après clic avec ?bugs=true', async ({ page }) => {
+  test('certains boutons "Ajouter au panier" sont attachés mais invisibles avec ?bugs=true', async ({ page }) => {
     await page.goto('./#/catalog?bugs=true')
     await expect(page.getByTestId('bug-mode-banner')).toBeVisible()
-    const btn = page.locator('[data-testid^="add-to-cart-"]:enabled').first()
-    const testId = await btn.getAttribute('data-testid')
-    expect(testId).toBeTruthy()
-    await btn.click()
-    await expect(page.getByTestId(testId!)).toHaveCount(0)
+    const hiddenButton = page.getByTestId('add-to-cart-book-playwright')
+    await expect(hiddenButton).toBeAttached()
+    await expect(hiddenButton).not.toBeVisible()
+    await expect(page.getByTestId('add-to-cart-book-ddd')).toBeVisible()
   })
 })
 
@@ -111,17 +110,16 @@ test.describe('Mode bugs — client_chaos', () => {
     expect(names).not.toEqual(sorted)
   })
 
-  test('le bouton "Ajouter au panier" disparaît pour client_chaos', async ({ page }) => {
-    const btn = page.locator('[data-testid^="add-to-cart-"]:enabled').first()
-    const testId = await btn.getAttribute('data-testid')
-    expect(testId).toBeTruthy()
-    await btn.click()
-    await expect(page.getByTestId(testId!)).toHaveCount(0)
+  test('certains boutons "Ajouter au panier" sont attachés mais invisibles pour client_chaos', async ({ page }) => {
+    const hiddenButton = page.getByTestId('add-to-cart-book-playwright')
+    await expect(hiddenButton).toBeAttached()
+    await expect(hiddenButton).not.toBeVisible()
+    await expect(page.getByTestId('add-to-cart-book-ddd')).toBeVisible()
   })
 
   test('la validation du formulaire fonctionne toujours pour client_chaos', async ({ page }) => {
-    // Add item via UI (button disappears after click but item is added)
-    await page.locator('[data-testid^="add-to-cart-"]:enabled').first().click()
+    // Add an unaffected item via UI before entering checkout.
+    await page.getByTestId('add-to-cart-book-ddd').click()
     await page.goto('./#/checkout/info')
     await expect(page.getByTestId('bug-mode-banner')).toBeVisible()
     const checkout = new CheckoutPage(page)

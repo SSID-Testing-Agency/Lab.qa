@@ -121,7 +121,7 @@ catch. They are documented here so maintainers do not "fix" them by accident:
 |----|--------|--------------|
 | `broken-images` | Product photos replaced by a broken image | `?bugs=true` or `client_chaos` login |
 | `reversed-sort` | Sort result is inverted | `?bugs=true` or `client_chaos` login |
-| `disappearing-button` | "Add to cart" button disappears after first click | `?bugs=true` or `client_chaos` login |
+| `disappearing-button` | Some catalog "Add to cart" buttons are invisible but remain in the DOM | `?bugs=true` or `client_chaos` login |
 | `invalid-form-accepted` | Checkout form accepts empty fields | `?bugs=true` only |
 | `price-off-by-one` | Cart total displays −0.01 € | `?bugs=true` only |
 
