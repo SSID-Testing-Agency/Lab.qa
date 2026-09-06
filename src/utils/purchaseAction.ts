@@ -25,5 +25,5 @@ export function getPurchaseActionLabel(
   if (state === 'out-of-stock') return 'Rupture de stock'
   if (state === 'max-reached') return 'Max atteint'
   if (state === 'choose-size') return options?.compact ? 'Choisir taille' : 'Choisir une taille'
-  return options?.compact ? '+ Panier' : 'Ajouter au panier'
+  return 'Ajouter au panier'
 }
