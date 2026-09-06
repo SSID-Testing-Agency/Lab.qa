@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCartStore } from '@/store/cartStore'
 import { useBugStore } from '@/store/bugStore'
@@ -6,6 +6,7 @@ import { PRODUCTS_MAP, effectivePrice } from '@/data/products'
 import { Button } from '@/components/ui/Button'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { formatPrice } from '@/utils/price'
+import { getPurchaseActionLabel, getPurchaseActionState } from '@/utils/purchaseAction'
 
 export function WishlistPage() {
   const ids     = useWishlistStore(s => s.ids)
@@ -15,12 +16,28 @@ export function WishlistPage() {
   const cartItems = useCartStore(s => s.items)
   const hasBug  = useBugStore(s => s.hasBug)
   const base    = import.meta.env.BASE_URL
+  const navigate = useNavigate()
 
   const products = ids.map(id => PRODUCTS_MAP.get(id)).filter(Boolean)
 
-  function handleMoveToCart(id: string) {
-    addItem(id)
-    remove(id)
+  function handleWishlistAction(product: NonNullable<typeof products[number]>) {
+    const cartQty = cartItems
+      .filter(item => item.productId === product.id)
+      .reduce((sum, item) => sum + item.quantity, 0)
+    const state = getPurchaseActionState({
+      inventory: product.inventory,
+      cartQuantity: cartQty,
+      hasSizes: Boolean(product.sizes?.length),
+      hasSelectedSize: false,
+    })
+    if (state === 'choose-size') {
+      navigate(`/product/${product.id}`)
+      return
+    }
+    if (state === 'add-to-cart') {
+      addItem(product.id)
+      remove(product.id)
+    }
   }
 
   return (
@@ -62,10 +79,17 @@ export function WishlistPage() {
         >
           {products.map(product => {
             if (!product) return null
-            const cartQty    = cartItems.find(i => i.productId === product.id)?.quantity ?? 0
-            const isOutOfStock = product.inventory === 0
-            const isAtMax    = !isOutOfStock && product.inventory - cartQty <= 0
-            const canAdd     = !isOutOfStock && !isAtMax
+            const cartQty = cartItems
+              .filter(item => item.productId === product.id)
+              .reduce((sum, item) => sum + item.quantity, 0)
+            const purchaseActionState = getPurchaseActionState({
+              inventory: product.inventory,
+              cartQuantity: cartQty,
+              hasSizes: Boolean(product.sizes?.length),
+              hasSelectedSize: false,
+            })
+            const isOutOfStock = purchaseActionState === 'out-of-stock'
+            const isAtMax = purchaseActionState === 'max-reached'
             const imageSrc   = hasBug('broken-images')
               ? `${base}images/broken.svg`
               : `${base}${product.image}`
@@ -121,12 +145,23 @@ export function WishlistPage() {
                 <div className="flex items-center gap-2 shrink-0">
                   <Button
                     size="sm"
-                    data-testid={`wishlist-add-to-cart-${product.id}`}
-                    onClick={() => handleMoveToCart(product.id)}
-                    disabled={!canAdd}
-                    aria-label={`Ajouter ${product.name} au panier`}
+                    data-testid={`${{
+                      'out-of-stock': 'wishlist-out-of-stock',
+                      'max-reached': 'wishlist-max-reached',
+                      'choose-size': 'wishlist-choose-size',
+                      'add-to-cart': 'wishlist-add-to-cart',
+                    }[purchaseActionState]}-${product.id}`}
+                    onClick={() => handleWishlistAction(product)}
+                    disabled={purchaseActionState !== 'choose-size' && purchaseActionState !== 'add-to-cart'}
+                    aria-label={purchaseActionState === 'add-to-cart'
+                      ? `Ajouter ${product.name} au panier`
+                      : purchaseActionState === 'choose-size'
+                        ? `${product.name} — choisir une taille`
+                        : purchaseActionState === 'out-of-stock'
+                          ? `${product.name} — rupture de stock`
+                          : `${product.name} — quantité maximale atteinte`}
                   >
-                    + Panier
+                    {getPurchaseActionLabel(purchaseActionState, { compact: true })}
                   </Button>
                   <button
                     data-testid={`wishlist-remove-${product.id}`}

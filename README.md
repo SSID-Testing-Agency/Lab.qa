@@ -103,6 +103,8 @@ This is the part that makes the app a *good* automation target. Conventions:
 
 - Every interactive element exposes a stable `data-testid`. Example:
   `data-testid="add-to-cart-book-clean-code"`.
+- Unavailable purchase actions use distinct state-specific test IDs (for example
+  `choose-size-*`, `out-of-stock-*`, and `max-reached-*`).
 - Selectors are **never** based on auto-generated CSS classes or DOM position.
 - Semantic HTML and ARIA roles are used throughout, so role-based locators
   (`getByRole`) work out of the box.

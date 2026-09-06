@@ -8,6 +8,7 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import { StarRating } from '@/components/ui/StarRating'
 import { Button } from '@/components/ui/Button'
 import { formatPrice } from '@/utils/price'
+import { getPurchaseActionLabel, getPurchaseActionState, type PurchaseActionState } from '@/utils/purchaseAction'
 
 interface ProductCardProps {
   product: Product
@@ -37,7 +38,22 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const hasSizes = product.sizes && product.sizes.length > 0
   const showButton = !(hasBug('disappearing-button') && clicked)
-  const canAdd = !isOutOfStock && !isAtMax && (!hasSizes || selectedSize !== null)
+  const purchaseActionState = getPurchaseActionState({
+    inventory: product.inventory,
+    cartQuantity: cartQty,
+    hasSizes: Boolean(hasSizes),
+    hasSelectedSize: selectedSize !== null,
+  })
+  const canAdd = purchaseActionState === 'add-to-cart'
+
+  function getCatalogPurchaseTestId(state: PurchaseActionState, productId: string) {
+    return {
+      'out-of-stock': `out-of-stock-${productId}`,
+      'max-reached': `max-reached-${productId}`,
+      'choose-size': `choose-size-${productId}`,
+      'add-to-cart': `add-to-cart-${productId}`,
+    }[state]
+  }
 
   function handleAddToCart() {
     if (!canAdd) return
@@ -196,12 +212,18 @@ export function ProductCard({ product }: ProductCardProps) {
             {showButton && (
               <Button
                 size="sm"
-                data-testid={`add-to-cart-${product.id}`}
+                data-testid={getCatalogPurchaseTestId(purchaseActionState, product.id)}
                 onClick={handleAddToCart}
                 disabled={!canAdd}
-                aria-label={`Ajouter ${product.name} au panier`}
+                aria-label={purchaseActionState === 'add-to-cart'
+                  ? `Ajouter ${product.name} au panier`
+                  : purchaseActionState === 'choose-size'
+                    ? `${product.name} — choisir une taille`
+                    : purchaseActionState === 'out-of-stock'
+                      ? `${product.name} — rupture de stock`
+                      : `${product.name} — quantité maximale atteinte`}
               >
-                {isOutOfStock ? 'Rupture de stock' : isAtMax ? 'Max atteint' : hasSizes && !selectedSize ? 'Choisir taille' : '+ Panier'}
+                {getPurchaseActionLabel(purchaseActionState, { compact: true })}
               </Button>
             )}
           </div>

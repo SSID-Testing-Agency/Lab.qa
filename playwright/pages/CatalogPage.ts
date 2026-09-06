@@ -33,6 +33,18 @@ export class CatalogPage {
     return this.page.getByTestId(`add-to-cart-${id}`)
   }
 
+  chooseSizeAction(id: string) {
+    return this.page.getByTestId(`choose-size-${id}`)
+  }
+
+  outOfStockAction(id: string) {
+    return this.page.getByTestId(`out-of-stock-${id}`)
+  }
+
+  maxReachedAction(id: string) {
+    return this.page.getByTestId(`max-reached-${id}`)
+  }
+
   sizeButton(id: string, size: string) {
     return this.page.getByTestId(`size-btn-${id}-${size}`)
   }

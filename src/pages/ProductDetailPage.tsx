@@ -10,6 +10,7 @@ import { StarRating } from '@/components/ui/StarRating'
 import { Button } from '@/components/ui/Button'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { formatPrice } from '@/utils/price'
+import { getPurchaseActionLabel, getPurchaseActionState } from '@/utils/purchaseAction'
 
 const CATEGORY_LABELS: Record<string, string> = {
   clothing:    'Vêtements',
@@ -37,13 +38,6 @@ export function ProductDetailPage() {
     if (id && PRODUCTS_MAP.has(id)) addViewed(id)
   }, [id])
 
-  function handleAddToCart() {
-    addItem(product!.id, selectedSize ?? undefined, qty)
-    setQty(1)
-    setAdded(true)
-    setTimeout(() => setAdded(false), 1500)
-  }
-
   if (!product) {
     return (
       <div className="text-center py-16">
@@ -55,6 +49,8 @@ export function ProductDetailPage() {
     )
   }
 
+  const currentProduct = product
+
   const isOutOfStock = product.inventory === 0
   const totalInCart = useCartStore(s =>
     s.items.filter(i => i.productId === product.id).reduce((sum, i) => sum + i.quantity, 0)
@@ -63,7 +59,21 @@ export function ProductDetailPage() {
   const isAtMax = !isOutOfStock && remaining <= 0
   const isLowStock = !isOutOfStock && !isAtMax && product.inventory <= 3
   const hasSizes = product.sizes && product.sizes.length > 0
-  const canAdd = !isOutOfStock && !isAtMax && (!hasSizes || selectedSize !== null)
+  const purchaseActionState = getPurchaseActionState({
+    inventory: product.inventory,
+    cartQuantity: totalInCart,
+    hasSizes: Boolean(hasSizes),
+    hasSelectedSize: selectedSize !== null,
+  })
+  const canAdd = purchaseActionState === 'add-to-cart'
+
+  function handleAddToCart() {
+    if (!canAdd) return
+    addItem(currentProduct.id, selectedSize ?? undefined, qty)
+    setQty(1)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+  }
 
   const imageSrc = hasBug('broken-images')
     ? `${base}images/broken.svg`
@@ -249,7 +259,12 @@ export function ProductDetailPage() {
             </p>
             <Button
               size="lg"
-              data-testid="product-detail-add-to-cart"
+              data-testid={{
+                'out-of-stock': 'product-detail-out-of-stock-action',
+                'max-reached': 'product-detail-max-reached',
+                'choose-size': 'product-detail-choose-size',
+                'add-to-cart': 'product-detail-add-to-cart',
+              }[purchaseActionState]}
               data-added={added ? 'true' : undefined}
               onClick={handleAddToCart}
               disabled={!canAdd}
@@ -260,11 +275,13 @@ export function ProductDetailPage() {
                     ? `${product.name} — rupture de stock`
                     : isAtMax
                       ? `${product.name} — quantité maximale atteinte`
+                    : purchaseActionState === 'choose-size'
+                      ? `${product.name} — choisir une taille`
                       : `Ajouter ${product.name} au panier`
               }
               className={`w-full sm:w-auto${added ? ' !bg-success hover:!bg-success' : ''}`}
             >
-              {added ? 'Ajouté ✓' : isOutOfStock ? 'Rupture de stock' : isAtMax ? 'Max atteint' : hasSizes && !selectedSize ? 'Choisir une taille' : 'Ajouter au panier'}
+              {added ? 'Ajouté ✓' : getPurchaseActionLabel(purchaseActionState)}
             </Button>
 
             <button
