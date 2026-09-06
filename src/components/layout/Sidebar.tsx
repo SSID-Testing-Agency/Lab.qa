@@ -284,7 +284,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Desktop sidebar — always visible */}
       <aside
         data-testid="sidebar"
-        className="hidden lg:flex flex-col w-56 shrink-0 border-r border-border overflow-y-auto"
+        className="hidden lg:flex flex-col w-56 shrink-0 border-r border-border"
       >
         {content}
       </aside>

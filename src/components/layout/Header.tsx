@@ -40,7 +40,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
   return (
     <header
       data-testid="navbar"
-      className="sticky top-0 z-50 bg-surface border-b border-border"
+      className="sticky top-0 z-50 shrink-0 bg-surface border-b border-border"
     >
       {/* Row 1 : logo + actions */}
       <div className="w-full px-4 sm:px-6 lg:px-8 h-20 flex items-center gap-3">
