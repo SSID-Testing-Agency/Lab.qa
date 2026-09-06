@@ -44,7 +44,7 @@ test.describe('Catalogue produits', () => {
     }).toBeLessThanOrEqual(601)
   })
 
-  test('chaque produit a une carte visible avec nom, prix et bouton', async ({ page }) => {
+  test('chaque carte expose une action cohérente avec son état', async ({ page }) => {
     const catalog = new CatalogPage(page)
     await catalog.goto()
 
@@ -52,8 +52,24 @@ test.describe('Catalogue produits', () => {
       await expect(catalog.productCard(id)).toBeVisible()
       await expect(catalog.productName(id)).toBeVisible()
       await expect(catalog.productPrice(id)).toBeVisible()
-      await expect(catalog.addToCartButton(id)).toBeVisible()
     }
+    await expect(catalog.addToCartButton('sauce-backpack')).toBeEnabled()
+    await expect(catalog.chooseSizeAction('sauce-bolt-shirt')).toBeDisabled()
+    await expect(catalog.outOfStockAction('sauce-bike-light')).toBeDisabled()
+    await expect(catalog.outOfStockAction('sauce-jacket')).toBeDisabled()
+    await expect(catalog.chooseSizeAction('sauce-onesie')).toBeDisabled()
+    await expect(catalog.chooseSizeAction('test-allthethings-shirt')).toBeDisabled()
+  })
+
+  test('une taille sélectionnée remplace l’action de choix par l’ajout', async ({ page }) => {
+    const catalog = new CatalogPage(page)
+    await catalog.goto()
+    await catalog.sizeButton('sauce-bolt-shirt', 'M').click()
+    await expect(catalog.chooseSizeAction('sauce-bolt-shirt')).not.toBeVisible()
+    await expect(catalog.addToCartButton('sauce-bolt-shirt')).toBeEnabled()
+    await catalog.sizeButton('sauce-bolt-shirt', 'M').click()
+    await expect(catalog.addToCartButton('sauce-bolt-shirt')).not.toBeVisible()
+    await expect(catalog.chooseSizeAction('sauce-bolt-shirt')).toBeDisabled()
   })
 
   test('tri A → Z produit un ordre alphabétique croissant', async ({ page }) => {

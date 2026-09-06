@@ -93,7 +93,10 @@ size identifier as the trailing segment. Static IDs have no suffix.
 | `discount-badge-{id}` | Discount badge |
 | `new-badge-{id}` | "New" badge |
 | `low-stock-badge-{id}` | Low stock warning |
-| `add-to-cart-{id}` | "Add to cart" button |
+| `add-to-cart-{id}` | Available add action; enabled and becomes `max-reached-{id}` when the cart reaches inventory |
+| `choose-size-{id}` | Size is required; disabled on cards and becomes `add-to-cart-{id}` after selection |
+| `out-of-stock-{id}` | Product has no inventory; disabled |
+| `max-reached-{id}` | All inventory is already in the cart; disabled |
 | `qty-decrease-{id}` | Decrease quantity button (catalog) |
 | `qty-increase-{id}` | Increase quantity button (catalog) |
 | `qty-value-{id}` | Current quantity display (catalog) |
@@ -117,7 +120,10 @@ size identifier as the trailing segment. Static IDs have no suffix.
 | `product-detail-qty-decrease` | Decrease quantity |
 | `product-detail-qty-increase` | Increase quantity |
 | `product-detail-qty-value` | Current quantity |
-| `product-detail-add-to-cart` | "Add to cart" button |
+| `product-detail-add-to-cart` | Available add action; becomes `product-detail-max-reached` at the cart maximum |
+| `product-detail-choose-size` | Size is required; becomes `product-detail-add-to-cart` after selection |
+| `product-detail-out-of-stock-action` | Product has no inventory; disabled (distinct from the stock message) |
+| `product-detail-max-reached` | All inventory is already in the cart; disabled |
 | `product-detail-back` | Back to catalog link |
 | `size-btn-{size}` | Size selector on detail page (e.g. `size-btn-L`) |
 | `related-products` | Related products section |
@@ -232,7 +238,10 @@ size identifier as the trailing segment. Static IDs have no suffix.
 | `wishlist-list` | Wishlist page container |
 | `wishlist-empty` | Empty wishlist message |
 | `wishlist-item-{id}` | Wishlist item row |
-| `wishlist-add-to-cart-{id}` | Add to cart from wishlist |
+| `wishlist-add-to-cart-{id}` | Available add action; removes the wishlist item after adding |
+| `wishlist-choose-size-{id}` | Size is required; enabled and navigates to the product detail without mutations |
+| `wishlist-out-of-stock-{id}` | Product has no inventory; disabled |
+| `wishlist-max-reached-{id}` | All inventory is already in the cart; disabled |
 | `wishlist-remove-{id}` | Remove from wishlist |
 | `wishlist-clear` | Clear entire wishlist |
 
