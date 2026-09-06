@@ -11,12 +11,12 @@ export function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="min-h-screen flex flex-col bg-canvas">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-canvas">
       {isBugMode && <BugBanner />}
       <Header onMenuToggle={() => setSidebarOpen(v => !v)} />
-      <div className="flex flex-1 w-full overflow-hidden">
+      <div className="flex flex-1 w-full">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 pt-5 pb-8 overflow-y-auto">
+        <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 pt-5 pb-8">
           <Outlet />
         </main>
       </div>

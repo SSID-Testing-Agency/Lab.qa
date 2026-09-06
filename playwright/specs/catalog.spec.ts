@@ -22,6 +22,28 @@ test.describe('Catalogue produits', () => {
     await catalog.expectProductCount(6)
   })
 
+  test('le footer reste atteignable par défilement sur un écran de faible hauteur', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 600 })
+
+    const main = page.locator('main')
+    const sidebar = page.getByTestId('sidebar')
+    const footer = page.locator('footer')
+
+    await expect(main).toHaveCSS('overflow-y', 'visible')
+    await expect(sidebar).toHaveCSS('overflow-y', 'visible')
+
+    const mainBox = await main.boundingBox()
+    expect(mainBox).not.toBeNull()
+    await page.mouse.move(mainBox!.x + mainBox!.width / 2, Math.min(mainBox!.y + 100, 500))
+    for (let i = 0; i < 3; i++) await page.mouse.wheel(0, 10_000)
+
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0)
+    await expect.poll(async () => {
+      const box = await footer.boundingBox()
+      return box?.y === undefined ? Infinity : box.y + box.height
+    }).toBeLessThanOrEqual(601)
+  })
+
   test('chaque produit a une carte visible avec nom, prix et bouton', async ({ page }) => {
     const catalog = new CatalogPage(page)
     await catalog.goto()
