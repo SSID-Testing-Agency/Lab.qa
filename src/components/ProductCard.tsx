@@ -9,6 +9,7 @@ import { StarRating } from '@/components/ui/StarRating'
 import { Button } from '@/components/ui/Button'
 import { formatPrice } from '@/utils/price'
 import { getPurchaseActionLabel, getPurchaseActionState, type PurchaseActionState } from '@/utils/purchaseAction'
+import { getProductImageSrc } from '@/utils/productImage'
 
 interface ProductCardProps {
   product: Product
@@ -32,9 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const isAtMax = !isOutOfStock && remaining <= 0
   const isLowStock = !isOutOfStock && !isAtMax && product.inventory <= 3
 
-  const imageSrc = hasBug('broken-images')
-    ? `${base}images/broken.svg`
-    : `${base}${product.image}`
+  const imageSrc = getProductImageSrc(base, product.image, hasBug('broken-images'))
 
   const hasSizes = product.sizes && product.sizes.length > 0
   const showButton = !(hasBug('disappearing-button') && clicked)

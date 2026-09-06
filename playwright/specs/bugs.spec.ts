@@ -21,15 +21,15 @@ test.describe('Mode bugs — ?bugs=true', () => {
   test('les images sont cassées avec ?bugs=true', async ({ page }) => {
     await page.goto('./#/catalog?bugs=true')
     await expect(page.getByTestId('bug-mode-banner')).toBeVisible()
-    const src = await page.locator('[data-testid^="product-image-"]').first().getAttribute('src')
-    expect(src).toContain('broken.svg')
+    const image = page.locator('[data-testid^="product-image-"]').first()
+    await expect.poll(() => image.evaluate(img => (img as HTMLImageElement).naturalWidth)).toBe(0)
   })
 
   test('les images sont normales sans bug mode', async ({ page }) => {
     await page.goto('./#/catalog')
     await expect(page.getByTestId('bug-mode-banner')).not.toBeVisible()
-    const src = await page.getByTestId('product-image-sauce-backpack').getAttribute('src')
-    expect(src).not.toContain('broken.svg')
+    const image = page.getByTestId('product-image-sauce-backpack')
+    await expect.poll(() => image.evaluate(img => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
   })
 
   test('le tri est inversé avec ?bugs=true', async ({ page }) => {
@@ -99,8 +99,8 @@ test.describe('Mode bugs — client_chaos', () => {
   })
 
   test('les images sont cassées pour client_chaos', async ({ page }) => {
-    const src = await page.locator('[data-testid^="product-image-"]').first().getAttribute('src')
-    expect(src).toContain('broken.svg')
+    const image = page.locator('[data-testid^="product-image-"]').first()
+    await expect.poll(() => image.evaluate(img => (img as HTMLImageElement).naturalWidth)).toBe(0)
   })
 
   test('le tri est inversé pour client_chaos', async ({ page }) => {
